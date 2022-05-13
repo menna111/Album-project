@@ -6,6 +6,8 @@
         <div class="row mt-5">
             <div class="col">
                 <h2 style="color: blue;">Update Album</h2>
+                @include('partials.message')
+
                 <form id="edit_album" method="post" class="mt-4" enctype="multipart/form-data" action="{{route('albums.update',$album->id)}}">
                     @csrf
                     <div class="my-3">

@@ -1,16 +1,19 @@
-{{--@extends('layouts.app')--}}
-{{--@section('title','create album')--}}
-{{--@section('content')--}}
 
-    <div class="container">
+
+<div class="container">
         <div class="row ">
             <div class="col">
                 <h2 style="color: blue;">Create New Album</h2>
+                @include('partials.message')
+
                 <form id="add" method="post" class="my-4" enctype="multipart/form-data" action="{{route('albums.store')}}">
                     @csrf
                     <div class="my-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" name="name" id="ame" placeholder="enter album name">
+                        <input type="text" class="form-control" name="name" id="name" placeholder="enter album name" @error('name') is-invalid  @enderror>
+                        @error('name')
+                        <p class="invalid-feedback">{{$message}}</p>
+                        @enderror
                     </div>
 
                     <div class="my-3">
@@ -23,7 +26,6 @@
             </div>
         </div>
     </div>
-{{--@endsection--}}
 
 <script>
     $('#add').submit(function (e){
