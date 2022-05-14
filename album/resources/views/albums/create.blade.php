@@ -7,15 +7,11 @@
 
                 <form id="add" method="post" class="my-4" enctype="multipart/form-data" action="{{route('albums.store')}}">
                     @csrf
-                    @include('partials.message')
 
                     <div class="my-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="enter album name" @error('name') is-invalid  @enderror>
-                        @error('name')
-                        <p class="invalid-feedback">{{$message}}</p>
-                        @enderror
-                    </div>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="enter album name">
+
 
                     <div class="my-3">
                         <label for="cover_image" class="form-label">photo</label>

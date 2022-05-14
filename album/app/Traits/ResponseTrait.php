@@ -10,10 +10,10 @@ trait ResponseTrait {
      * Create a new controller instance.
      *
      * @param $msg
-     * @param $statusCode
+     * @param int $statusCode
      * @return JsonResponse
      */
-    public function returnError($msg, $statusCode): JsonResponse
+    public function returnError($msg, int $statusCode = 200): JsonResponse
     {
         return response()->json([
             'status'    => false,
@@ -41,10 +41,10 @@ trait ResponseTrait {
      *
      * @param $msg
      * @param $value
-     * @param $statusCode
+     * @param int $statusCode
      * @return JsonResponse
      */
-    public function returnData($msg, $value, $statusCode): JsonResponse
+    public function returnData($msg, $value, int $statusCode = 200): JsonResponse
     {
         return response()->json([
             'status'    => true,

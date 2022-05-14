@@ -7,6 +7,7 @@ use App\Traits\ImageUpload;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 
 class AlbumController extends Controller
 {
@@ -42,10 +43,14 @@ class AlbumController extends Controller
     public function store(Request $request)
     {
         //validation
-        $request->validate([
+
+        $validator = Validator::make($request->all(), [
             'name'=>'required|min:3|max:50',
             'cover_image'=>'required|image',
         ]);
+        if ($validator->fails()) {
+            return $this->returnError($validator->errors()->all());
+        }
 
 
         Album::create([
@@ -93,12 +98,15 @@ class AlbumController extends Controller
     {
 
 
-//        return $this->returnData('dd', $request->cover_image,200 );
         //validation
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name'=>'required|min:3|max:50',
-
+            'cover_image'=>'nullable|image',
         ]);
+        if ($validator->fails()) {
+            return $this->returnError($validator->errors()->all());
+        }
+
 
 
         $album=Album::find($id);
@@ -106,16 +114,16 @@ class AlbumController extends Controller
         if($album != null) {
             if ($request->has('cover_image')){
                 File::delete($album->cover_image);
-                $cover_photo= $this->uploadImage($request->file('cover_image'),'album/cover_image',50);
+                $cover_image= $this->uploadImage($request->file('cover_image'),'album/cover_image',50);
 
             }else{
-                $cover_photo=$album->cover_photo;
+                $cover_image=$album->cover_image;
             }
 
 
             $album->update([
                 'name' =>$request->post('name'),
-                'cover_image' =>$cover_photo,
+                'cover_image' =>$cover_image,
             ]);
 
                 return  $this->returnSuccess('album updated suuccessfully',201);
